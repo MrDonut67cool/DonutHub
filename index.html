@@ -7,6 +7,7 @@
     <title>DonutHub</title>
 
     <style>
+
         * {
             margin: 0;
             padding: 0;
@@ -30,7 +31,162 @@
             background-attachment: fixed;
         }
 
-        /* TOP BAR */
+
+        /* =========================
+           VERIFY SCREEN
+        ========================= */
+
+        #verifyScreen {
+            position: fixed;
+            inset: 0;
+
+            background: #020812;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            z-index: 9999;
+
+            animation: verifyFadeIn 0.5s ease;
+        }
+
+        .verifyBox {
+            text-align: center;
+
+            padding: 45px;
+
+            width: 450px;
+            max-width: 90%;
+
+            background: #071a35;
+
+            border: 1px solid #1677d2;
+
+            border-radius: 20px;
+
+            box-shadow:
+                0 0 80px rgba(20, 120, 220, 0.2);
+
+            animation: verifyBoxIn 0.7s ease;
+        }
+
+        .verifyBox h1 {
+            font-size: 52px;
+            letter-spacing: 4px;
+
+            margin-bottom: 12px;
+        }
+
+        .verifyBox p {
+            color: #9dbddd;
+            margin-bottom: 25px;
+        }
+
+        .verifyCommand {
+            padding: 16px;
+
+            background: #020812;
+
+            border-radius: 10px;
+
+            font-family: monospace;
+
+            font-size: 18px;
+
+            margin-bottom: 25px;
+
+            border: 1px solid rgba(80,160,255,0.2);
+        }
+
+        .verifying {
+            margin-top: 25px;
+
+            color: #7fb9ef;
+
+            font-size: 18px;
+            font-weight: bold;
+
+            display: none;
+        }
+
+        .dots::after {
+            content: "";
+
+            animation: dots 1.5s infinite;
+        }
+
+        .loadingCircle {
+            width: 42px;
+            height: 42px;
+
+            margin: 25px auto 0;
+
+            border-radius: 50%;
+
+            border: 4px solid rgba(80,160,255,0.15);
+
+            border-top: 4px solid #2990ed;
+
+            animation: spin 1s linear infinite;
+
+            display: none;
+        }
+
+        @keyframes spin {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes dots {
+            0% {
+                content: "";
+            }
+
+            33% {
+                content: ".";
+            }
+
+            66% {
+                content: "..";
+            }
+
+            100% {
+                content: "...";
+            }
+        }
+
+        @keyframes verifyFadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes verifyBoxIn {
+            from {
+                transform: scale(0.9);
+                opacity: 0;
+            }
+
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+
+        /* =========================
+           TOP BAR
+        ========================= */
 
         .topbar {
             position: fixed;
@@ -47,9 +203,11 @@
             padding: 12px 35px;
 
             background: rgba(2, 10, 25, 0.9);
+
             backdrop-filter: blur(10px);
 
-            border-bottom: 1px solid rgba(80, 160, 255, 0.15);
+            border-bottom:
+                1px solid rgba(80, 160, 255, 0.15);
 
             z-index: 100;
         }
@@ -57,22 +215,30 @@
         .logo {
             font-size: 25px;
             font-weight: 800;
+
             letter-spacing: 2px;
         }
 
         .money-area {
             display: flex;
             align-items: center;
+
             gap: 12px;
+
             flex-wrap: wrap;
+
             justify-content: flex-end;
         }
 
         .balance {
-            background: rgba(22, 119, 210, 0.2);
-            border: 1px solid rgba(80, 160, 255, 0.3);
+            background:
+                rgba(22, 119, 210, 0.2);
+
+            border:
+                1px solid rgba(80, 160, 255, 0.3);
 
             padding: 10px 15px;
+
             border-radius: 10px;
 
             font-weight: bold;
@@ -93,13 +259,17 @@
             background: #1aaa6a;
         }
 
-        /* HERO */
+
+        /* =========================
+           HERO
+        ========================= */
 
         .hero {
             min-height: 100vh;
 
             display: flex;
             flex-direction: column;
+
             align-items: center;
             justify-content: center;
 
@@ -110,7 +280,9 @@
 
         h1 {
             font-size: 80px;
+
             font-weight: 800;
+
             letter-spacing: 4px;
 
             text-shadow:
@@ -119,16 +291,22 @@
 
         .subtitle {
             margin-top: 15px;
+
             font-size: 20px;
+
             color: #a9c8e8;
         }
 
-        /* BUTTONS */
+
+        /* =========================
+           BUTTONS
+        ========================= */
 
         .buttons {
             margin-top: 35px;
 
             display: flex;
+
             gap: 15px;
         }
 
@@ -136,12 +314,15 @@
             padding: 15px 30px;
 
             border: none;
+
             border-radius: 10px;
 
             background: #1677d2;
+
             color: white;
 
             font-size: 16px;
+
             font-weight: bold;
 
             cursor: pointer;
@@ -158,7 +339,10 @@
                 0 8px 25px rgba(20, 120, 220, 0.35);
         }
 
-        /* PANELS */
+
+        /* =========================
+           PANELS
+        ========================= */
 
         .panel {
             display: none;
@@ -166,13 +350,16 @@
             margin-top: 30px;
 
             width: 400px;
+
             max-width: 90vw;
 
             padding: 30px;
 
-            background: rgba(3, 15, 32, 0.96);
+            background:
+                rgba(3, 15, 32, 0.96);
 
-            border: 1px solid rgba(80, 160, 255, 0.4);
+            border:
+                1px solid rgba(80, 160, 255, 0.4);
 
             border-radius: 18px;
 
@@ -182,15 +369,20 @@
 
         .panel h2 {
             font-size: 30px;
+
             margin-bottom: 15px;
         }
 
         .panel p {
             color: #a9c8e8;
+
             margin-bottom: 20px;
         }
 
-        /* COIN */
+
+        /* =========================
+           COIN
+        ========================= */
 
         .coin {
             width: 100px;
@@ -211,6 +403,7 @@
             color: #513900;
 
             font-size: 17px;
+
             font-weight: bold;
         }
 
@@ -228,7 +421,10 @@
             }
         }
 
-        /* INPUT */
+
+        /* =========================
+           INPUT
+        ========================= */
 
         .input {
             width: 100%;
@@ -237,7 +433,9 @@
 
             margin-bottom: 15px;
 
-            border: 1px solid #315d89;
+            border:
+                1px solid #315d89;
+
             border-radius: 9px;
 
             background: #071a35;
@@ -253,7 +451,10 @@
             border-color: #2990ed;
         }
 
-        /* RESULTS */
+
+        /* =========================
+           RESULTS
+        ========================= */
 
         #result,
         #cashoutResult,
@@ -263,6 +464,7 @@
             min-height: 25px;
 
             font-size: 19px;
+
             font-weight: bold;
         }
 
@@ -274,24 +476,32 @@
             color: #ff6868;
         }
 
-        /* GLOBAL EARNINGS */
+
+        /* =========================
+           GLOBAL EARNINGS
+        ========================= */
 
         .earnings {
             margin-top: 70px;
 
             padding: 25px 45px;
 
-            background: rgba(3, 15, 32, 0.7);
+            background:
+                rgba(3, 15, 32, 0.7);
 
-            border: 1px solid rgba(80, 160, 255, 0.2);
+            border:
+                1px solid rgba(80, 160, 255, 0.2);
 
             border-radius: 16px;
         }
 
         .earnings-title {
             color: #8fb9df;
+
             font-size: 15px;
+
             text-transform: uppercase;
+
             letter-spacing: 2px;
         }
 
@@ -299,10 +509,14 @@
             margin-top: 8px;
 
             font-size: 38px;
+
             font-weight: bold;
         }
 
-        /* SECOND SECTION */
+
+        /* =========================
+           SECOND SECTION
+        ========================= */
 
         .section {
             min-height: 400px;
@@ -314,12 +528,18 @@
 
         .section h2 {
             font-size: 40px;
+
             margin-bottom: 20px;
         }
 
         .section p {
             color: #a9c8e8;
         }
+
+
+        /* =========================
+           MOBILE
+        ========================= */
 
         @media (max-width: 750px) {
 
@@ -353,12 +573,59 @@
                 padding: 20px;
             }
         }
+
     </style>
 </head>
 
+
 <body>
 
-    <!-- TOP BAR -->
+
+    <!-- =========================
+         FIRST VISIT VERIFY SCREEN
+    ========================= -->
+
+    <div id="verifyScreen">
+
+        <div class="verifyBox">
+
+            <h1>VERIFY</h1>
+
+            <p>
+                Verify your DonutHub account
+            </p>
+
+            <div class="verifyCommand">
+                /pay Julianninja12
+            </div>
+
+            <button onclick="startVerification()">
+                VERIFY
+            </button>
+
+            <div
+                id="verifying"
+                class="verifying">
+
+                <span class="dots">
+                    Verifying
+                </span>
+
+            </div>
+
+            <div
+                id="loadingCircle"
+                class="loadingCircle">
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         TOP BAR
+    ========================= -->
 
     <div class="topbar">
 
@@ -369,18 +636,27 @@
         <div class="money-area">
 
             <div class="balance">
+
                 💰 Money:
-                <span id="money">1,000</span>
+
+                <span id="money">
+                    1,000
+                </span>
+
             </div>
 
             <div class="pay-text">
+
                 /pay Julianninja12 to add
+
             </div>
 
             <button
                 class="cashout"
                 onclick="openCashout()">
+
                 CASH OUT
+
             </button>
 
         </div>
@@ -388,18 +664,20 @@
     </div>
 
 
-    <!-- MAIN -->
+    <!-- =========================
+         MAIN
+    ========================= -->
 
     <div class="hero">
 
-        <h1>DONUTHUB</h1>
+        <h1>
+            DONUTHUB
+        </h1>
 
         <p class="subtitle">
             Your DonutSMP community hub
         </p>
 
-
-        <!-- BUTTONS -->
 
         <div class="buttons">
 
@@ -416,16 +694,24 @@
 
         <!-- COIN FLIP -->
 
-        <div id="coinFlipPanel" class="panel">
+        <div
+            id="coinFlipPanel"
+            class="panel">
 
-            <h2>🪙 Coin Flip</h2>
+            <h2>
+                🪙 Coin Flip
+            </h2>
 
             <p>
                 Use demo Money to flip the coin.
             </p>
 
-            <div id="coin" class="coin">
+            <div
+                id="coin"
+                class="coin">
+
                 ?
+
             </div>
 
             <input
@@ -446,21 +732,29 @@
 
         <!-- DONATE -->
 
-        <div id="donatePanel" class="panel">
+        <div
+            id="donatePanel"
+            class="panel">
 
-            <h2>❤️ Donate</h2>
+            <h2>
+                ❤️ Donate
+            </h2>
 
             <p>
                 To add Money, use:
             </p>
 
-            <h3>/pay Julianninja12</h3>
+            <h3>
+                /pay Julianninja12
+            </h3>
 
             <br>
 
             <p>
                 Example:
-                <strong>/pay Julianninja12 1k</strong>
+                <strong>
+                    /pay Julianninja12 1k
+                </strong>
             </p>
 
             <div id="donateResult"></div>
@@ -470,9 +764,13 @@
 
         <!-- CASH OUT -->
 
-        <div id="cashoutPanel" class="panel">
+        <div
+            id="cashoutPanel"
+            class="panel">
 
-            <h2>💵 Cash Out</h2>
+            <h2>
+                💵 Cash Out
+            </h2>
 
             <p>
                 Enter the amount of demo Money.
@@ -505,7 +803,9 @@
             <div
                 class="earnings-number"
                 id="globalEarnings">
-                12.000B
+
+                1.34B
+
             </div>
 
         </div>
@@ -515,7 +815,9 @@
 
     <div class="section">
 
-        <h2>DonutSMP</h2>
+        <h2>
+            DonutSMP
+        </h2>
 
         <p>
             More DonutHub features coming soon...
@@ -524,16 +826,112 @@
     </div>
 
 
-    <!-- JAVASCRIPT -->
+    <!-- =========================
+         JAVASCRIPT
+    ========================= -->
 
     <script>
+
+
+        /* =========================
+           DEMO VERIFICATION
+        ========================= */
+
+        function startVerification() {
+
+            const button =
+                document.querySelector(
+                    ".verifyBox button"
+                );
+
+            const verifying =
+                document.getElementById(
+                    "verifying"
+                );
+
+            const loadingCircle =
+                document.getElementById(
+                    "loadingCircle"
+                );
+
+
+            button.style.display =
+                "none";
+
+            verifying.style.display =
+                "block";
+
+            loadingCircle.style.display =
+                "block";
+
+
+            /*
+                Demo verification only.
+
+                Nothing is actually checked
+                and no payment is processed.
+            */
+
+            setTimeout(function() {
+
+                localStorage.setItem(
+                    "donutVerified",
+                    "true"
+                );
+
+                const screen =
+                    document.getElementById(
+                        "verifyScreen"
+                    );
+
+                screen.style.opacity =
+                    "0";
+
+                screen.style.transition =
+                    "opacity 0.6s ease";
+
+
+                setTimeout(function() {
+
+                    screen.style.display =
+                        "none";
+
+                }, 600);
+
+            }, 30000);
+
+        }
+
+
+        /* =========================
+           CHECK FIRST VISIT
+        ========================= */
+
+        if (
+            localStorage.getItem(
+                "donutVerified"
+            ) === "true"
+        ) {
+
+            document.getElementById(
+                "verifyScreen"
+            ).style.display =
+                "none";
+
+        }
+
 
         /* =========================
            SAVED MONEY
         ========================= */
 
         let money =
-            Number(localStorage.getItem("donutMoney"));
+            Number(
+                localStorage.getItem(
+                    "donutMoney"
+                )
+            );
+
 
         if (!money || money < 0) {
 
@@ -543,19 +941,23 @@
                 "donutMoney",
                 money
             );
+
         }
 
 
         function updateMoney() {
 
-            document.getElementById("money")
-                .textContent =
+            document.getElementById(
+                "money"
+            ).textContent =
                 money.toLocaleString();
+
 
             localStorage.setItem(
                 "donutMoney",
                 money
             );
+
         }
 
 
@@ -568,14 +970,21 @@
 
         function hidePanels() {
 
-            document.getElementById("coinFlipPanel")
-                .style.display = "none";
+            document.getElementById(
+                "coinFlipPanel"
+            ).style.display =
+                "none";
 
-            document.getElementById("donatePanel")
-                .style.display = "none";
+            document.getElementById(
+                "donatePanel"
+            ).style.display =
+                "none";
 
-            document.getElementById("cashoutPanel")
-                .style.display = "none";
+            document.getElementById(
+                "cashoutPanel"
+            ).style.display =
+                "none";
+
         }
 
 
@@ -583,8 +992,11 @@
 
             hidePanels();
 
-            document.getElementById("coinFlipPanel")
-                .style.display = "block";
+            document.getElementById(
+                "coinFlipPanel"
+            ).style.display =
+                "block";
+
         }
 
 
@@ -592,8 +1004,11 @@
 
             hidePanels();
 
-            document.getElementById("donatePanel")
-                .style.display = "block";
+            document.getElementById(
+                "donatePanel"
+            ).style.display =
+                "block";
+
         }
 
 
@@ -601,8 +1016,11 @@
 
             hidePanels();
 
-            document.getElementById("cashoutPanel")
-                .style.display = "block";
+            document.getElementById(
+                "cashoutPanel"
+            ).style.display =
+                "block";
+
         }
 
 
@@ -613,13 +1031,19 @@
         function flipCoin() {
 
             const input =
-                document.getElementById("betAmount");
+                document.getElementById(
+                    "betAmount"
+                );
 
             const result =
-                document.getElementById("result");
+                document.getElementById(
+                    "result"
+                );
 
             const coin =
-                document.getElementById("coin");
+                document.getElementById(
+                    "coin"
+                );
 
             const bet =
                 Number(input.value);
@@ -627,23 +1051,27 @@
 
             if (!bet || bet <= 0) {
 
-                result.className = "lose";
+                result.className =
+                    "lose";
 
                 result.textContent =
                     "Enter a valid amount.";
 
                 return;
+
             }
 
 
             if (bet > money) {
 
-                result.className = "lose";
+                result.className =
+                    "lose";
 
                 result.textContent =
                     "Not enough Money.";
 
                 return;
+
             }
 
 
@@ -652,11 +1080,15 @@
             updateMoney();
 
 
-            coin.classList.remove("flipping");
+            coin.classList.remove(
+                "flipping"
+            );
 
             void coin.offsetWidth;
 
-            coin.classList.add("flipping");
+            coin.classList.add(
+                "flipping"
+            );
 
 
             result.className = "";
@@ -686,7 +1118,9 @@
                         bet.toLocaleString() +
                         " Money!";
 
-                } else {
+                }
+
+                else {
 
                     coin.textContent =
                         "TAILS";
@@ -716,10 +1150,14 @@
         function cashOut() {
 
             const input =
-                document.getElementById("cashoutAmount");
+                document.getElementById(
+                    "cashoutAmount"
+                );
 
             const result =
-                document.getElementById("cashoutResult");
+                document.getElementById(
+                    "cashoutResult"
+                );
 
             const amount =
                 Number(input.value);
@@ -727,23 +1165,27 @@
 
             if (!amount || amount <= 0) {
 
-                result.className = "lose";
+                result.className =
+                    "lose";
 
                 result.textContent =
                     "Enter an amount.";
 
                 return;
+
             }
 
 
             if (amount > money) {
 
-                result.className = "lose";
+                result.className =
+                    "lose";
 
                 result.textContent =
                     "Not enough Money.";
 
                 return;
+
             }
 
 
@@ -752,7 +1194,8 @@
             updateMoney();
 
 
-            result.className = "win";
+            result.className =
+                "win";
 
             result.textContent =
                 "✓ Sent " +
@@ -767,77 +1210,76 @@
         /* =========================
            GLOBAL EARNINGS
            
-           Starts at 12 BILLION.
-           Increases slowly based on
-           real elapsed time.
+           1.34B initially
+           +0.01B every 3 minutes
         ========================= */
 
         const earningsStart =
-            12000000000;
+            1.34;
 
-        const earningsTime =
+
+        let earningsStartTime =
             localStorage.getItem(
                 "earningsStartTime"
             );
 
 
-        if (!earningsTime) {
+        if (!earningsStartTime) {
+
+            earningsStartTime =
+                Date.now();
 
             localStorage.setItem(
                 "earningsStartTime",
-                Date.now()
+                earningsStartTime
             );
+
         }
 
 
         function updateGlobalEarnings() {
 
-            const start =
-                Number(
-                    localStorage.getItem(
-                        "earningsStartTime"
-                    )
-                );
-
-
             const elapsed =
-                Date.now() - start;
+                Date.now() -
+                Number(earningsStartTime);
 
 
-            /*
-               Adds 1000 every day.
-               This is only a visual website
-               counter.
-            */
+            const threeMinutes =
+                1000 * 60 * 3;
 
-            const days =
-                elapsed /
-                (1000 * 60 * 60 * 24);
+
+            const increases =
+                Math.floor(
+                    elapsed /
+                    threeMinutes
+                );
 
 
             const earnings =
                 earningsStart +
-                Math.floor(days * 1000);
-
-
-            const billions =
-                earnings / 1000000000;
+                (
+                    increases *
+                    0.01
+                );
 
 
             document.getElementById(
                 "globalEarnings"
             ).textContent =
-                billions.toFixed(9) + "B";
+                earnings.toFixed(2) +
+                "B";
 
         }
 
 
         updateGlobalEarnings();
 
+
         setInterval(
             updateGlobalEarnings,
-            60000
+            1000
         );
+
 
     </script>
 
