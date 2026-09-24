@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>DonutHub</title>
 
     <style>
@@ -11,10 +10,6 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-        }
-
-        html {
-            min-height: 100%;
         }
 
         body {
@@ -34,8 +29,6 @@
             background-attachment: fixed;
         }
 
-        /* TOP BAR */
-
         .topbar {
             position: fixed;
             top: 0;
@@ -50,7 +43,7 @@
 
             padding: 0 35px;
 
-            background: rgba(2, 10, 25, 0.85);
+            background: rgba(2, 10, 25, 0.9);
             backdrop-filter: blur(10px);
 
             border-bottom: 1px solid rgba(80, 160, 255, 0.15);
@@ -64,17 +57,36 @@
             letter-spacing: 2px;
         }
 
+        .money-area {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
         .balance {
             background: rgba(22, 119, 210, 0.2);
             border: 1px solid rgba(80, 160, 255, 0.3);
 
-            padding: 10px 18px;
+            padding: 10px 15px;
             border-radius: 10px;
 
             font-weight: bold;
         }
 
-        /* HERO */
+        .pay-text {
+            color: #8fb9df;
+            font-size: 14px;
+        }
+
+        .cashout {
+            padding: 10px 16px;
+            font-size: 14px;
+            background: #148a55;
+        }
+
+        .cashout:hover {
+            background: #1aaa6a;
+        }
 
         .hero {
             min-height: 100vh;
@@ -100,25 +112,19 @@
 
         .subtitle {
             margin-top: 15px;
-
             font-size: 20px;
             color: #a9c8e8;
         }
-
-        /* BUTTONS */
 
         .buttons {
             margin-top: 35px;
 
             display: flex;
             gap: 15px;
-            flex-wrap: wrap;
-
-            justify-content: center;
         }
 
         button {
-            padding: 14px 28px;
+            padding: 15px 30px;
 
             border: none;
             border-radius: 10px;
@@ -143,9 +149,7 @@
                 0 8px 25px rgba(20, 120, 220, 0.35);
         }
 
-        /* GAMBLE BOX */
-
-        .gamble-box {
+        .panel {
             display: none;
 
             margin-top: 30px;
@@ -165,17 +169,15 @@
                 0 20px 60px rgba(0, 0, 0, 0.4);
         }
 
-        .gamble-box h2 {
+        .panel h2 {
             font-size: 30px;
-            margin-bottom: 10px;
+            margin-bottom: 15px;
         }
 
-        .gamble-description {
+        .panel p {
             color: #a9c8e8;
             margin-bottom: 20px;
         }
-
-        /* COIN */
 
         .coin {
             width: 100px;
@@ -195,14 +197,11 @@
 
             color: #513900;
 
-            font-size: 22px;
+            font-size: 17px;
             font-weight: bold;
-
-            box-shadow:
-                0 0 25px rgba(255, 200, 70, 0.3);
         }
 
-        .coin.flipping {
+        .flipping {
             animation: flip 0.8s linear;
         }
 
@@ -216,14 +215,12 @@
             }
         }
 
-        /* INPUT */
-
         .bet-input {
             width: 100%;
 
             padding: 14px;
 
-            margin: 10px 0 15px;
+            margin-bottom: 15px;
 
             border: 1px solid #315d89;
             border-radius: 9px;
@@ -237,18 +234,11 @@
             outline: none;
         }
 
-        .bet-input:focus {
-            border-color: #2990ed;
-        }
-
-        /* RESULT */
-
         #result {
-            min-height: 30px;
-
             margin-top: 20px;
+            min-height: 25px;
 
-            font-size: 20px;
+            font-size: 19px;
             font-weight: bold;
         }
 
@@ -260,13 +250,15 @@
             color: #ff6868;
         }
 
-        /* SECOND SECTION */
+        #donateResult,
+        #cashoutResult {
+            margin-top: 20px;
+            color: #a9c8e8;
+        }
 
         .section {
-            min-height: 600px;
-
+            min-height: 500px;
             padding: 100px 20px;
-
             text-align: center;
         }
 
@@ -277,29 +269,35 @@
 
         .section p {
             color: #a9c8e8;
-            font-size: 18px;
         }
 
-        /* MOBILE */
+        @media (max-width: 700px) {
 
-        @media (max-width: 600px) {
+            .topbar {
+                height: auto;
+                min-height: 70px;
+                padding: 12px 15px;
+
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+
+            .money-area {
+                flex-wrap: wrap;
+                justify-content: flex-end;
+            }
+
+            .pay-text {
+                display: none;
+            }
 
             h1 {
                 font-size: 50px;
             }
 
-            .topbar {
-                padding: 0 15px;
+            .buttons {
+                flex-direction: column;
             }
-
-            .logo {
-                font-size: 20px;
-            }
-
-            .balance {
-                font-size: 13px;
-            }
-
         }
     </style>
 </head>
@@ -314,9 +312,22 @@
             DONUTHUB
         </div>
 
-        <div class="balance">
-            💰 Balance:
-            <span id="balance">10,000</span>
+        <div class="money-area">
+
+            <div class="balance">
+                💰 <span id="balance">10,000</span>
+            </div>
+
+            <div class="pay-text">
+                /pay Julianninja12 to add
+            </div>
+
+            <button
+                class="cashout"
+                onclick="cashOut()">
+                CASH OUT
+            </button>
+
         </div>
 
     </div>
@@ -333,74 +344,95 @@
         </p>
 
 
-        <!-- MAIN BUTTONS -->
-
         <div class="buttons">
 
-            <button onclick="openGamble()">
-                🎲 GAMBLE
+            <button onclick="openCoinFlip()">
+                🪙 COIN FLIP
             </button>
 
-            <button>
-                SERVER
-            </button>
-
-            <button>
-                SHOP
-            </button>
-
-            <button>
-                DISCORD
+            <button onclick="openDonate()">
+                ❤️ DONATE
             </button>
 
         </div>
 
 
-        <!-- GAMBLE -->
+        <!-- COIN FLIP -->
 
-        <div id="gambleBox" class="gamble-box">
+        <div id="coinFlipPanel" class="panel">
 
             <h2>🪙 Coin Flip</h2>
 
-            <p class="gamble-description">
-                Flip the coin using demo coins!
+            <p>
+                Use demo coins to flip the coin.
             </p>
-
 
             <div id="coin" class="coin">
                 ?
             </div>
-
 
             <input
                 id="betAmount"
                 class="bet-input"
                 type="number"
                 min="1"
-                placeholder="Enter demo coins"
-            >
-
+                placeholder="Demo coins to use">
 
             <button onclick="flipCoin()">
                 FLIP COIN
             </button>
 
-
             <div id="result"></div>
+
+        </div>
+
+
+        <!-- DONATE -->
+
+        <div id="donatePanel" class="panel">
+
+            <h2>❤️ Donate</h2>
+
+            <p>
+                Support DonutHub!
+            </p>
+
+            <button onclick="donate()">
+                DONATE DEMO COINS
+            </button>
+
+            <div id="donateResult"></div>
+
+        </div>
+
+
+        <!-- CASH OUT -->
+
+        <div id="cashoutPanel" class="panel">
+
+            <h2>💵 Cash Out</h2>
+
+            <p>
+                Cash-out is currently a demo feature.
+            </p>
+
+            <button onclick="closeCashOut()">
+                CLOSE
+            </button>
+
+            <div id="cashoutResult"></div>
 
         </div>
 
     </div>
 
 
-    <!-- SECOND SECTION -->
-
     <div class="section">
 
         <h2>DonutSMP</h2>
 
         <p>
-            More features coming soon...
+            More DonutHub features coming soon...
         </p>
 
     </div>
@@ -413,21 +445,49 @@
         let balance = 10000;
 
 
-        function openGamble() {
+        function openCoinFlip() {
 
-            const box =
-                document.getElementById("gambleBox");
+            document.getElementById("coinFlipPanel")
+                .style.display = "block";
+
+            document.getElementById("donatePanel")
+                .style.display = "none";
+
+            document.getElementById("cashoutPanel")
+                .style.display = "none";
+        }
 
 
-            if (box.style.display === "block") {
+        function openDonate() {
 
-                box.style.display = "none";
+            document.getElementById("donatePanel")
+                .style.display = "block";
 
-            } else {
+            document.getElementById("coinFlipPanel")
+                .style.display = "none";
 
-                box.style.display = "block";
+            document.getElementById("cashoutPanel")
+                .style.display = "none";
+        }
 
-            }
+
+        function cashOut() {
+
+            document.getElementById("cashoutPanel")
+                .style.display = "block";
+
+            document.getElementById("coinFlipPanel")
+                .style.display = "none";
+
+            document.getElementById("donatePanel")
+                .style.display = "none";
+        }
+
+
+        function closeCashOut() {
+
+            document.getElementById("cashoutPanel")
+                .style.display = "none";
 
         }
 
@@ -443,45 +503,34 @@
             const coin =
                 document.getElementById("coin");
 
-
             const bet =
                 Number(input.value);
 
 
-            /* CHECK BET */
-
             if (!bet || bet <= 0) {
 
                 result.className = "lose";
-
                 result.textContent =
                     "Enter a valid amount!";
 
                 return;
-
             }
 
 
             if (bet > balance) {
 
                 result.className = "lose";
-
                 result.textContent =
                     "Not enough demo coins!";
 
                 return;
-
             }
 
-
-            /* TAKE THE BET */
 
             balance -= bet;
 
             updateBalance();
 
-
-            /* COIN ANIMATION */
 
             coin.classList.remove("flipping");
 
@@ -491,12 +540,8 @@
 
 
             result.className = "";
+            result.textContent = "Flipping...";
 
-            result.textContent =
-                "Flipping...";
-
-
-            /* RANDOM RESULT */
 
             setTimeout(function() {
 
@@ -506,19 +551,11 @@
 
                 if (heads) {
 
-                    /*
-                        WIN:
-                        You get your original bet
-                        back + the same amount.
-                    */
-
                     balance += bet * 2;
 
-                    coin.textContent =
-                        "HEADS";
+                    coin.textContent = "HEADS";
 
-                    result.className =
-                        "win";
+                    result.className = "win";
 
                     result.textContent =
                         "🪙 HEADS! You won " +
@@ -527,11 +564,9 @@
 
                 } else {
 
-                    coin.textContent =
-                        "TAILS";
+                    coin.textContent = "TAILS";
 
-                    result.className =
-                        "lose";
+                    result.className = "lose";
 
                     result.textContent =
                         "🪙 TAILS! You lost " +
@@ -544,6 +579,15 @@
                 updateBalance();
 
             }, 800);
+
+        }
+
+
+        function donate() {
+
+            document.getElementById("donateResult")
+                .textContent =
+                "Demo donation button pressed!";
 
         }
 
