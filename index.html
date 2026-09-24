@@ -1,23 +1,562 @@
-<div class="buttons">
-    <button onclick="openGamble()">GAMBLE</button>
-    <button>SERVER</button>
-    <button>SHOP</button>
-    <button>DISCORD</button>
-</div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<div id="gambleBox" class="gamble-box">
-    <h2>🪙 Coin Flip</h2>
+    <title>DonutHub</title>
 
-    <p>Balance: <span id="balance">10,000</span> Demo Coins</p>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    <input
-        id="betAmount"
-        type="number"
-        placeholder="Enter demo coins"
-        min="1"
-    >
+        html {
+            min-height: 100%;
+        }
 
-    <button onclick="flipCoin()">FLIP COIN</button>
+        body {
+            min-height: 100vh;
+            color: white;
+            font-family: Arial, sans-serif;
 
-    <div id="result"></div>
-</div>
+            background: linear-gradient(
+                to bottom,
+                #071a35 0%,
+                #0b2548 30%,
+                #102f52 55%,
+                #071526 78%,
+                #020812 100%
+            );
+
+            background-attachment: fixed;
+        }
+
+        /* TOP BAR */
+
+        .topbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+
+            width: 100%;
+            height: 70px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 0 35px;
+
+            background: rgba(2, 10, 25, 0.85);
+            backdrop-filter: blur(10px);
+
+            border-bottom: 1px solid rgba(80, 160, 255, 0.15);
+
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 25px;
+            font-weight: 800;
+            letter-spacing: 2px;
+        }
+
+        .balance {
+            background: rgba(22, 119, 210, 0.2);
+            border: 1px solid rgba(80, 160, 255, 0.3);
+
+            padding: 10px 18px;
+            border-radius: 10px;
+
+            font-weight: bold;
+        }
+
+        /* HERO */
+
+        .hero {
+            min-height: 100vh;
+
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+
+            text-align: center;
+
+            padding-top: 70px;
+        }
+
+        h1 {
+            font-size: 80px;
+            font-weight: 800;
+            letter-spacing: 4px;
+
+            text-shadow:
+                0 0 25px rgba(80, 160, 255, 0.4);
+        }
+
+        .subtitle {
+            margin-top: 15px;
+
+            font-size: 20px;
+            color: #a9c8e8;
+        }
+
+        /* BUTTONS */
+
+        .buttons {
+            margin-top: 35px;
+
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+
+            justify-content: center;
+        }
+
+        button {
+            padding: 14px 28px;
+
+            border: none;
+            border-radius: 10px;
+
+            background: #1677d2;
+            color: white;
+
+            font-size: 16px;
+            font-weight: bold;
+
+            cursor: pointer;
+
+            transition: 0.2s;
+        }
+
+        button:hover {
+            background: #2990ed;
+
+            transform: translateY(-3px);
+
+            box-shadow:
+                0 8px 25px rgba(20, 120, 220, 0.35);
+        }
+
+        /* GAMBLE BOX */
+
+        .gamble-box {
+            display: none;
+
+            margin-top: 30px;
+
+            width: 380px;
+            max-width: 90vw;
+
+            padding: 30px;
+
+            background: rgba(3, 15, 32, 0.95);
+
+            border: 1px solid rgba(80, 160, 255, 0.4);
+
+            border-radius: 18px;
+
+            box-shadow:
+                0 20px 60px rgba(0, 0, 0, 0.4);
+        }
+
+        .gamble-box h2 {
+            font-size: 30px;
+            margin-bottom: 10px;
+        }
+
+        .gamble-description {
+            color: #a9c8e8;
+            margin-bottom: 20px;
+        }
+
+        /* COIN */
+
+        .coin {
+            width: 100px;
+            height: 100px;
+
+            margin: 20px auto;
+
+            border-radius: 50%;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: #d9a441;
+
+            border: 5px solid #f5cf70;
+
+            color: #513900;
+
+            font-size: 22px;
+            font-weight: bold;
+
+            box-shadow:
+                0 0 25px rgba(255, 200, 70, 0.3);
+        }
+
+        .coin.flipping {
+            animation: flip 0.8s linear;
+        }
+
+        @keyframes flip {
+            0% {
+                transform: rotateY(0deg);
+            }
+
+            100% {
+                transform: rotateY(1080deg);
+            }
+        }
+
+        /* INPUT */
+
+        .bet-input {
+            width: 100%;
+
+            padding: 14px;
+
+            margin: 10px 0 15px;
+
+            border: 1px solid #315d89;
+            border-radius: 9px;
+
+            background: #071a35;
+
+            color: white;
+
+            font-size: 16px;
+
+            outline: none;
+        }
+
+        .bet-input:focus {
+            border-color: #2990ed;
+        }
+
+        /* RESULT */
+
+        #result {
+            min-height: 30px;
+
+            margin-top: 20px;
+
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .win {
+            color: #55e38a;
+        }
+
+        .lose {
+            color: #ff6868;
+        }
+
+        /* SECOND SECTION */
+
+        .section {
+            min-height: 600px;
+
+            padding: 100px 20px;
+
+            text-align: center;
+        }
+
+        .section h2 {
+            font-size: 40px;
+            margin-bottom: 20px;
+        }
+
+        .section p {
+            color: #a9c8e8;
+            font-size: 18px;
+        }
+
+        /* MOBILE */
+
+        @media (max-width: 600px) {
+
+            h1 {
+                font-size: 50px;
+            }
+
+            .topbar {
+                padding: 0 15px;
+            }
+
+            .logo {
+                font-size: 20px;
+            }
+
+            .balance {
+                font-size: 13px;
+            }
+
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- TOP BAR -->
+
+    <div class="topbar">
+
+        <div class="logo">
+            DONUTHUB
+        </div>
+
+        <div class="balance">
+            💰 Balance:
+            <span id="balance">10,000</span>
+        </div>
+
+    </div>
+
+
+    <!-- MAIN -->
+
+    <div class="hero">
+
+        <h1>DONUTHUB</h1>
+
+        <p class="subtitle">
+            Your DonutSMP community hub
+        </p>
+
+
+        <!-- MAIN BUTTONS -->
+
+        <div class="buttons">
+
+            <button onclick="openGamble()">
+                🎲 GAMBLE
+            </button>
+
+            <button>
+                SERVER
+            </button>
+
+            <button>
+                SHOP
+            </button>
+
+            <button>
+                DISCORD
+            </button>
+
+        </div>
+
+
+        <!-- GAMBLE -->
+
+        <div id="gambleBox" class="gamble-box">
+
+            <h2>🪙 Coin Flip</h2>
+
+            <p class="gamble-description">
+                Flip the coin using demo coins!
+            </p>
+
+
+            <div id="coin" class="coin">
+                ?
+            </div>
+
+
+            <input
+                id="betAmount"
+                class="bet-input"
+                type="number"
+                min="1"
+                placeholder="Enter demo coins"
+            >
+
+
+            <button onclick="flipCoin()">
+                FLIP COIN
+            </button>
+
+
+            <div id="result"></div>
+
+        </div>
+
+    </div>
+
+
+    <!-- SECOND SECTION -->
+
+    <div class="section">
+
+        <h2>DonutSMP</h2>
+
+        <p>
+            More features coming soon...
+        </p>
+
+    </div>
+
+
+    <!-- JAVASCRIPT -->
+
+    <script>
+
+        let balance = 10000;
+
+
+        function openGamble() {
+
+            const box =
+                document.getElementById("gambleBox");
+
+
+            if (box.style.display === "block") {
+
+                box.style.display = "none";
+
+            } else {
+
+                box.style.display = "block";
+
+            }
+
+        }
+
+
+        function flipCoin() {
+
+            const input =
+                document.getElementById("betAmount");
+
+            const result =
+                document.getElementById("result");
+
+            const coin =
+                document.getElementById("coin");
+
+
+            const bet =
+                Number(input.value);
+
+
+            /* CHECK BET */
+
+            if (!bet || bet <= 0) {
+
+                result.className = "lose";
+
+                result.textContent =
+                    "Enter a valid amount!";
+
+                return;
+
+            }
+
+
+            if (bet > balance) {
+
+                result.className = "lose";
+
+                result.textContent =
+                    "Not enough demo coins!";
+
+                return;
+
+            }
+
+
+            /* TAKE THE BET */
+
+            balance -= bet;
+
+            updateBalance();
+
+
+            /* COIN ANIMATION */
+
+            coin.classList.remove("flipping");
+
+            void coin.offsetWidth;
+
+            coin.classList.add("flipping");
+
+
+            result.className = "";
+
+            result.textContent =
+                "Flipping...";
+
+
+            /* RANDOM RESULT */
+
+            setTimeout(function() {
+
+                const heads =
+                    Math.random() < 0.5;
+
+
+                if (heads) {
+
+                    /*
+                        WIN:
+                        You get your original bet
+                        back + the same amount.
+                    */
+
+                    balance += bet * 2;
+
+                    coin.textContent =
+                        "HEADS";
+
+                    result.className =
+                        "win";
+
+                    result.textContent =
+                        "🪙 HEADS! You won " +
+                        bet +
+                        " demo coins!";
+
+                } else {
+
+                    coin.textContent =
+                        "TAILS";
+
+                    result.className =
+                        "lose";
+
+                    result.textContent =
+                        "🪙 TAILS! You lost " +
+                        bet +
+                        " demo coins!";
+
+                }
+
+
+                updateBalance();
+
+            }, 800);
+
+        }
+
+
+        function updateBalance() {
+
+            document.getElementById("balance")
+                .textContent =
+                balance.toLocaleString();
+
+        }
+
+    </script>
+
+</body>
+</html>
